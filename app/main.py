@@ -4,9 +4,9 @@ import time
 
 from kafka import KafkaProducer
 
-from external_api.api_request.groq_api import post_groq_api
-from external_api.api_request.news_api import fetch_articles
-from external_api.service.counter_service import get_counter, increment_counter
+from app.api_request.groq_api import post_groq_api
+from app.api_request.news_api import fetch_articles
+from app.service.counter_service import get_counter, increment_counter
 from dotenv import load_dotenv
 
 load_dotenv(verbose=True)
@@ -20,7 +20,6 @@ if __name__ == '__main__':
         print(api_articles)
         print(post_groq_api(api_articles["articles"]["results"][0]))
 
-        list(print())
 
         for article in api_articles["articles"]["results"]:
             kafka_producer = KafkaProducer(

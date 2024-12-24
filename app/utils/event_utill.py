@@ -1,8 +1,8 @@
 from dataclasses import asdict
-from external_api.db.models.date_model import Date
-from external_api.db.models.event_model import Event
-from external_api.db.models.location_model import Location
-from external_api.db.models.target_type_model import TargetType
+from app.db.models.date_model import Date
+from app.db.models.event_model import Event
+from app.db.models.location_model import Location
+from app.db.models.target_type_model import TargetType
 
 
 def convert_event_to_json(event):

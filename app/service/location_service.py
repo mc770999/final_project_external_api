@@ -1,4 +1,4 @@
-from external_api.api_request.location_api import get_lot_and_lan_for_location
+from app.api_request.location_api import get_lot_and_lan_for_location
 
 
 def get_lat_lon(country_name):

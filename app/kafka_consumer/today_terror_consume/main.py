@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from kafka import KafkaConsumer
 
-from external_api.db.repository.elastic_repository import insert_document
+from app.db.repository.elastic_repository import insert_document
 
 load_dotenv(verbose=True)
 

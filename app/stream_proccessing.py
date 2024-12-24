@@ -87,7 +87,7 @@ app = faust.App(
     value_serializer='json'  # Message value format
 )
 
-
+print(os.environ['NEWS_TOPIC'])
 news_topic = app.topic(os.environ['NEWS_TOPIC'])
 
 news_today_topic = app.topic(os.environ['NEWS_TODAY_TOPIC'])
@@ -99,21 +99,21 @@ news_historical_topic = app.topic(os.environ['NEWS_HISTORICAL_TOPIC'])
 async def process_person(stream):
     async for event in stream.events():
         # Perform some processing
-        print(event.key.decode('utf-8'), event.value)
+        print(event.value)
 
         article_analise = post_groq_api(event.value)
 
         if article_analise.get("category", None) in ["nowadays terror attack"]:
             article_filtered = extract_data_flat({**event.value, "groq": article_analise})
             event = convert_to_event(article_filtered)
-            await news_today_topic.send(key=event.key, value=event)
-            print(f"Processed and sent: key: {event.key.decode('utf-8')}, value: {event}, topic: {news_today_topic}")
+            await news_today_topic.send(value=event)
+            print(f"Processed and sent: key: value: {event}, topic: {news_today_topic}")
 
         elif article_analise.get("category", None) in ["historical terror attack"]:
             article_filtered = extract_data_flat({**event.value, "groq": article_analise})
             event = convert_to_event(article_filtered)
-            await news_historical_topic.send(key=event.key, value=event)
-            print(f"Processed and sent: key: {event.key.decode('utf-8')}, value: {event}, topic: {news_historical_topic}")
+            await news_historical_topic.send(value=event)
+            print(f"Processed and sent: key: value: {event}, topic: {news_historical_topic}")
 
         else:
             print("article is not terror news")
